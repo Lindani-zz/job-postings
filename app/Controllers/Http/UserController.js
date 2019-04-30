@@ -3,23 +3,17 @@ const User = use('App/Models/User')
 
 class UserController {
 
-    async create ({request, response, auth }) {
-        const user = await User.create(request.only(['username', 'email', 'password']))
+    async login({ request, response, auth }) {
+        const { email, password } = request.only(['email', 'password']);
 
-        await auth.login(user)
-        return response.redirect('/')
+        const token  = await auth.attempt(email, password)
+        return response.json(token)
     }
 
-    async login({ request, auth, response, session }) {
-        const { email, password } = request.all();
+    async create ({request, response, auth }) {
+        await User.create(request.only(['username', 'email', 'password']))
+        return response.send({message: 'User created succssfully'})
 
-        try {
-            await auth.attempt(email, password);
-            return response.redirect('/');
-        } catch (error) {
-            session.flash({loginError: 'These credentials do not work.'})
-            return response.redirect('/login');
-        }
     }
 }
 
