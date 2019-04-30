@@ -17,18 +17,16 @@
 const Route = use('Route')
 
 Route.get('/', 'JobController.home')
-Route.on('/signup').render('auth.signup');
-Route.post('/signup', 'UserController.create').validator('CreateUser')
-Route.on('/login').render('auth.login')
-Route.post('/login', 'UserController.login').validator('LoginUser');
 
+Route.post('/login', 'UserController.login');
+Route.post('/signup', 'UserController.create')
 Route.get('/logout', async({auth, response}) => {
     await auth.logout()
     return response.redirect('/')
 })
 
 Route.get('/post-a-job', 'JobController.userIndex')
-Route.post('/post-a-job', 'JobController.create').validator('CreateJob')
+Route.post('/post-a-job', 'JobController.create')
 
 Route.group(()=> {
     Route.get('/delete/:id', 'JobController.delete')
