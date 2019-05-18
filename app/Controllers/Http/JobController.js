@@ -3,14 +3,18 @@
 const Job = use('App/Models/Job')
 class JobController {
     
-    async home({view}){
+    async home({response}){
         const jobs = await Job.all()
-        return view.render('index', {jobs : jobs.toJSON()})
+        return response.json(jobs)
+
     }
 
-    async userIndex ({view, auth}){
+    async userIndex ({response, auth}){
         const jobs = await auth.user.jobs().fetch()
-        return view.render('jobs', {jobs : jobs.toJSON()})
+        // return view.render('jobs', {jobs : jobs.toJSON()})
+        // console.log(jobs)
+        return response.json(jobs)
+
     }
 
     async create ({request, response, auth, session}){

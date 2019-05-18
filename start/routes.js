@@ -16,8 +16,9 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', 'JobController.home')
+Route.get('/jobs', 'JobController.home')
 
+Route.get('/users', 'UserController.users')
 Route.post('/login', 'UserController.login');
 Route.post('/signup', 'UserController.create')
 Route.get('/logout', async({auth, response}) => {
@@ -25,7 +26,7 @@ Route.get('/logout', async({auth, response}) => {
     return response.redirect('/')
 })
 
-Route.get('/post-a-job', 'JobController.userIndex')
+Route.get('/jobs', 'JobController.userIndex')
 Route.post('/post-a-job', 'JobController.create')
 
 Route.group(()=> {

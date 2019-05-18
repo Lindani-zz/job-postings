@@ -3,6 +3,11 @@ const User = use('App/Models/User')
 
 class UserController {
 
+    async users({response}){
+        const users = await User.all()
+        return response.json(users)
+    }
+
     async login({ request, response, auth }) {
         const { email, password } = request.only(['email', 'password']);
 
